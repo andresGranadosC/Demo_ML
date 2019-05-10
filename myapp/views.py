@@ -51,6 +51,10 @@ def ccdefault_detail(request):
     return render(request, 'cc_default_form.html', {'form': form})
 
 
+def welcome( request ):
+    return render(request, 'welcome.html')
+
+
 def visualizedata( request,  processing = 0 ):
     print("---------------------- request.build_absolute_uri() ----------------------: ", request.build_absolute_uri())
     print("---------------------- request.POST ----------------------:", request.POST )
