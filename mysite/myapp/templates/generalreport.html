@@ -1,0 +1,92 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ir-edge">
+        <title>General Report</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    </head>
+        
+
+    <body style="padding: 20px;">
+        {% load static %}
+        
+        <b>Reporte descriptivo de datos personales y de su crédito respecto a la población<br/>
+            <b><br/>
+                
+        <h2>
+            Resultados: {{ result }}
+        </h2>
+
+        <div>
+            <p id="paragraph">
+                
+            </p>
+        </div>
+
+        {% if info is not None %}
+        <div> 
+            <h2> 
+                Info: {{ info }} <br>
+            </h2>
+        </div>
+        {% endif %}
+
+        {% if request.method == 'POST' %}
+        {{ request.POST }}
+        
+        
+        <div class='progress-wrapper'>
+            <div id='progress-bar' class='progress-bar' style="background-color: #68a9ef; width: 0%;">&nbsp;</div>
+        </div>
+        <div id="progress-bar-message">Waiting for progress to start...</div>
+        {% else %}
+        {{ request.GET }}
+        {% endif %}
+
+
+
+        {% for name in imageNames %}
+            <img src="{% static "" %}{{name}}.png" alt="My image1">
+        {% endfor %}
+
+       <!-- <img src="{% static "testplot1.png" %}" alt="My image1">
+       <img src="{% static "testplot2.png" %}" alt="My image2">
+       <img src="{% static "testplot3.png" %}" alt="My image1">
+       <img src="{% static "testplot4.png" %}" alt="My image2"> -->
+
+        <!-- <img src="http://127.0.0.1:8000/testplot1.png" alt="My image"> -->
+        <!-- <img src="http://127.0.0.1:8000/testplot2.png" alt="My image2"> -->
+        
+        <!-- <a href="{% url 'ccdefault' %}">Volver </a> -->
+
+        <form>
+            <input type="button" value="Volver" onclick="history.back()">
+        </form>
+    </body>
+
+    <footer>
+        <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+        
+        <script type="text/javascript">
+                var result = "{{ result }}";
+                // debugger;
+                // CeleryProgressBar.getContext( result );
+        </script>
+
+        <script type="text/javascript">
+            var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
+            document.addEventListener("DOMContentLoaded", function () {
+                CeleryProgressBar.initProgressBar(progressUrl);
+            });
+        </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    
+    </footer>
+</html>
+
+

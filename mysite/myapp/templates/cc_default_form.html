@@ -1,0 +1,65 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ir-edge">
+        <title>Credit Card Form</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        
+    </head>
+    
+    <body style="padding: 20px;">
+<!--        {% load static %}-->
+<!--        <a href="{% url 'visualizedata' %}">Visualizar datos de la muestra </a>-->
+
+        {% if prediction is not None %}
+        {% load static %}
+        <script src="{% static 'celery_progress/celery_progress.js' %}"></script>
+
+        <script type="text/javascript">
+            var progressUrl = "{% url 'celery_progress:task_status' task_id %}";
+            document.addEventListener("DOMContentLoaded", function () {
+                CeleryProgressBar.initProgressBar(progressUrl);
+            });
+        </script>
+
+        <div class='progress-wrapper'>
+            <div id='progress-bar' class='progress-bar' style="background-color: #68a9ef; width: 0%;">&nbsp;</div>
+        </div>
+        <div id="progress-bar-message">Waiting for progress to start...</div>
+
+        <div> 
+                <h2> 
+                    Incumplimiento en el pago del crédito el próximo mes: {{ prediction }} <br>
+                </h2>
+                <h3>
+                    El mejor estimador es: {{ bestEstimator }} <br>
+                    El valor 'Recall' para este estimador es: {{ bestMethodRecall }}
+                </h3>
+        </div>
+        {% endif %}
+
+        <b>
+            <h1> 
+                Incumplimiento en el pago del crédito el próximo mes <br>
+            </h1>
+            <b>Ingrese sus datos personales y pagos de su crédito<br/>
+        <br/>
+        <b> <br/>
+        {% crispy form form.helper %}
+        
+        <form action="{% url 'visualizedata' %}" class="CcDefaultForm" method="post">
+            
+        </form>
+
+        <h1><b>
+                <br>Resumen de los resultados predicción de incumplimiento<br>
+        <br/></h1>
+
+
+    </body>
+</html>
+
