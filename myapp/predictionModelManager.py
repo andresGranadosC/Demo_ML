@@ -19,7 +19,6 @@ from sklearn.metrics import classification_report
 
 
 from celery import shared_task
-from celery_progress.backend import ProgressRecorder
 import time
 
 from django.shortcuts import render

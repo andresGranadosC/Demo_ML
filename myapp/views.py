@@ -13,7 +13,6 @@ from .predictionModelManager import ModelManager, ModelTestManager, selectBestEs
 # from celery.decorators import task
 # from celery import task
 from celery import shared_task
-from celery_progress.backend import ProgressRecorder
 import time
 
 
